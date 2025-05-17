@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -184,6 +185,27 @@ function Map() {
           <span>Trafic dense</span>
         </div>
       </div>
+=======
+import { useEffect, useState } from 'react';
+
+function Map() {
+  const [mapUrl, setMapUrl] = useState('');
+
+  useEffect(() => {
+    setMapUrl('http://localhost:8000/api/carte_axes/');
+  }, []);
+
+  return (
+    <div>
+      <h2>Carte des Axes Routiers de Fès</h2>
+      {mapUrl && (
+        <iframe
+          src={mapUrl}
+          title="Carte des Axes"
+          style={{ width: '100%', height: '600px', border: 'none', marginTop: '20px' }}
+        />
+      )}
+>>>>>>> 1379eb69c40c8b8b40e0a8f90dbd037ea1900970
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+<<<<<<< HEAD
 import { useParams, Link } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -230,6 +231,31 @@ function ItineraireMap() {
           Voir la carte complète
         </Link>
       </div>
+=======
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
+function ItineraireMap() {
+  const { itineraireId } = useParams();
+  const [mapUrl, setMapUrl] = useState('');
+
+  useEffect(() => {
+    if (itineraireId) {
+      setMapUrl(`http://localhost:8000/api/itineraire_carte/${itineraireId}/`);
+    }
+  }, [itineraireId]);
+
+  return (
+    <div>
+      <h2>Carte de l'Itinéraire</h2>
+      {mapUrl && (
+        <iframe
+          src={mapUrl}
+          title="Carte Itinéraire"
+          style={{ width: '100%', height: '600px', border: 'none', marginTop: '20px' }}
+        />
+      )}
+>>>>>>> 1379eb69c40c8b8b40e0a8f90dbd037ea1900970
     </div>
   );
 }

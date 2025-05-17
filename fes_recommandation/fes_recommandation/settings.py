@@ -58,7 +58,13 @@ ROOT_URLCONF = 'fes_recommandation.urls'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+<<<<<<< HEAD
 ]
+=======
+    "http://localhost:3001",
+]
+
+>>>>>>> 1379eb69c40c8b8b40e0a8f90dbd037ea1900970
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
