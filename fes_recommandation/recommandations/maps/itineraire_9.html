@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_fffc1258a15b47946e001882bebc8585 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_fffc1258a15b47946e001882bebc8585" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_fffc1258a15b47946e001882bebc8585 = L.map(
+                "map_fffc1258a15b47946e001882bebc8585",
+                {
+                    center: [34.0331, -4.9998],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f91f9c5c010c7f3b150a2db371d71e9d = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_f91f9c5c010c7f3b150a2db371d71e9d.addTo(map_fffc1258a15b47946e001882bebc8585);
+        
+    
+            var poly_line_feec32c34bcfc61e99a4beb87e7a727f = L.polyline(
+                [[34.0465, -4.9998], [34.0456, -4.9961], [34.0439, -4.9944]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_fffc1258a15b47946e001882bebc8585);
+        
+    
+        var popup_eee5aff9a25c09fdc344df3e6fd0d9f1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_84d878919c6203feefb149b9a419e246 = $(`<div id="html_84d878919c6203feefb149b9a419e246" style="width: 100.0%; height: 100.0%;">Avenue Hassan II (Place de Florence - Place de la RÃ©sistance)</div>`)[0];
+                popup_eee5aff9a25c09fdc344df3e6fd0d9f1.setContent(html_84d878919c6203feefb149b9a419e246);
+            
+        
+
+        poly_line_feec32c34bcfc61e99a4beb87e7a727f.bindPopup(popup_eee5aff9a25c09fdc344df3e6fd0d9f1)
+        ;
+
+        
+    
+    
+            var poly_line_231843404a79f8b47c6bf9958b6f2c06 = L.polyline(
+                [[34.0458, -4.995], [34.0463, -4.9923], [34.0475, -4.9891]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_fffc1258a15b47946e001882bebc8585);
+        
+    
+        var popup_933bac5fee35d65581a8af4c2583e55b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0f836d85ad806de98d0106f02900c6a6 = $(`<div id="html_0f836d85ad806de98d0106f02900c6a6" style="width: 100.0%; height: 100.0%;">Avenue Allal El Fassi (Place de l'Istiqlal - UniversitÃ© Sidi Mohamed Ben Abdellah)</div>`)[0];
+                popup_933bac5fee35d65581a8af4c2583e55b.setContent(html_0f836d85ad806de98d0106f02900c6a6);
+            
+        
+
+        poly_line_231843404a79f8b47c6bf9958b6f2c06.bindPopup(popup_933bac5fee35d65581a8af4c2583e55b)
+        ;
+
+        
+    
+    
+            var poly_line_85c654acbbdf5b822da87c0d12fa2e27 = L.polyline(
+                [[34.0639, -4.9734], [34.0621, -4.9758], [34.06, -4.9782]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_fffc1258a15b47946e001882bebc8585);
+        
+    
+        var popup_319a3e133875256a1f9f17cbb18c1c92 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f4e7794a42bd52fb08b33ee6a22d2a2d = $(`<div id="html_f4e7794a42bd52fb08b33ee6a22d2a2d" style="width: 100.0%; height: 100.0%;">Boulevard Chefchaouni (Bab Boujloud - Place R'cif)</div>`)[0];
+                popup_319a3e133875256a1f9f17cbb18c1c92.setContent(html_f4e7794a42bd52fb08b33ee6a22d2a2d);
+            
+        
+
+        poly_line_85c654acbbdf5b822da87c0d12fa2e27.bindPopup(popup_319a3e133875256a1f9f17cbb18c1c92)
+        ;
+
+        
+    
+    
+            var poly_line_659cb92fc3959f4bc1772bd0e970130d = L.polyline(
+                [[34.0428, -4.9968], [34.0435, -4.9922], [34.0451, -4.9888]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_fffc1258a15b47946e001882bebc8585);
+        
+    
+        var popup_83c5f2416944d258f6580e7aedca473b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f6d134edd569b0d6d4fd29412ebfc204 = $(`<div id="html_f6d134edd569b0d6d4fd29412ebfc204" style="width: 100.0%; height: 100.0%;">Boulevard Mohammed V (Gare de FÃ¨s - Place de Florence)</div>`)[0];
+                popup_83c5f2416944d258f6580e7aedca473b.setContent(html_f6d134edd569b0d6d4fd29412ebfc204);
+            
+        
+
+        poly_line_659cb92fc3959f4bc1772bd0e970130d.bindPopup(popup_83c5f2416944d258f6580e7aedca473b)
+        ;
+
+        
+    
+    
+            var poly_line_317ac9aa494066db37fda84cf2f33a94 = L.polyline(
+                [[34.0501, -4.9912], [34.049, -4.9898], [34.0477, -4.9884]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_fffc1258a15b47946e001882bebc8585);
+        
+    
+        var popup_049765a3c830a5876437d873b5c26046 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_33d40c2df03da0e9bab5fb152561d636 = $(`<div id="html_33d40c2df03da0e9bab5fb152561d636" style="width: 100.0%; height: 100.0%;">Avenue des FAR (Place des Alaouites - Avenue de la LibertÃ©)</div>`)[0];
+                popup_049765a3c830a5876437d873b5c26046.setContent(html_33d40c2df03da0e9bab5fb152561d636);
+            
+        
+
+        poly_line_317ac9aa494066db37fda84cf2f33a94.bindPopup(popup_049765a3c830a5876437d873b5c26046)
+        ;
+
+        
+    
+    
+            var poly_line_a87500fc3ba046ea80c87face95fc337 = L.polyline(
+                [[34.0558, -4.9991], [34.0523, -4.9935], [34.05, -4.989]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 5}
+            ).addTo(map_fffc1258a15b47946e001882bebc8585);
+        
+    
+        var popup_d0f4f57518c526e6e78ae1836f0d3e73 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ad26c940cb4bf863da91c1cb873ad989 = $(`<div id="html_ad26c940cb4bf863da91c1cb873ad989" style="width: 100.0%; height: 100.0%;">Route de Sefrou (Bab Ftouh - EntrÃ©e de Sefrou)</div>`)[0];
+                popup_d0f4f57518c526e6e78ae1836f0d3e73.setContent(html_ad26c940cb4bf863da91c1cb873ad989);
+            
+        
+
+        poly_line_a87500fc3ba046ea80c87face95fc337.bindPopup(popup_d0f4f57518c526e6e78ae1836f0d3e73)
+        ;
+
+        
+    
+    
+            var marker_3835f79cbce09cb21e8f0a29e91e8ede = L.marker(
+                [34.0465, -4.9998],
+                {
+}
+            ).addTo(map_fffc1258a15b47946e001882bebc8585);
+        
+    
+            var icon_ead6d998740aad2d07b8685ff5561017 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9755a0d93ee69c8f8508eee75cf48879 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_552fb59fe6cd46d0820e715328d87011 = $(`<div id="html_552fb59fe6cd46d0820e715328d87011" style="width: 100.0%; height: 100.0%;">Départ</div>`)[0];
+                popup_9755a0d93ee69c8f8508eee75cf48879.setContent(html_552fb59fe6cd46d0820e715328d87011);
+            
+        
+
+        marker_3835f79cbce09cb21e8f0a29e91e8ede.bindPopup(popup_9755a0d93ee69c8f8508eee75cf48879)
+        ;
+
+        
+    
+    
+                marker_3835f79cbce09cb21e8f0a29e91e8ede.setIcon(icon_ead6d998740aad2d07b8685ff5561017);
+            
+    
+            var marker_2371273cf6d55e16be32966a7be07fad = L.marker(
+                [34.05, -4.989],
+                {
+}
+            ).addTo(map_fffc1258a15b47946e001882bebc8585);
+        
+    
+            var icon_25550dbe97ffae3fb2321ea34bdefd34 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9ae188e94405a040efa12cb590a2e5d1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ef2795def694494d8ee7599399eaf9b9 = $(`<div id="html_ef2795def694494d8ee7599399eaf9b9" style="width: 100.0%; height: 100.0%;">Arrivée</div>`)[0];
+                popup_9ae188e94405a040efa12cb590a2e5d1.setContent(html_ef2795def694494d8ee7599399eaf9b9);
+            
+        
+
+        marker_2371273cf6d55e16be32966a7be07fad.bindPopup(popup_9ae188e94405a040efa12cb590a2e5d1)
+        ;
+
+        
+    
+    
+                marker_2371273cf6d55e16be32966a7be07fad.setIcon(icon_25550dbe97ffae3fb2321ea34bdefd34);
+            
+</script>
+</html>

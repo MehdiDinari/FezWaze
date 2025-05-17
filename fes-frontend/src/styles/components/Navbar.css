@@ -1,0 +1,260 @@
+/* Base style adapté à l'interface réelle de FezWaze */
+.navbar {
+  background-color: #0077a2;
+  padding: 0.8rem 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+  padding: 0.6rem 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Logo style */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.navbar-logo svg {
+  margin-right: 0.5rem;
+  transition: all 0.4s ease;
+}
+
+.navbar-logo:hover svg {
+  transform: rotate(15deg);
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+}
+
+/* Indicateur de position pour le logo */
+.navbar-logo .location-dot {
+  position: absolute;
+  bottom: -4px;
+  left: 20px;
+  width: 6px;
+  height: 6px;
+  background-color: #ff5252;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px white, 0 0 5px rgba(255, 82, 82, 0.6);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 4px rgba(255, 82, 82, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 82, 82, 0); }
+}
+
+/* Menu principal */
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.navbar-item {
+  margin: 0 0.1rem;
+  position: relative;
+  animation: item-reveal 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.navbar-item:nth-child(1) { animation-delay: 0.1s; }
+.navbar-item:nth-child(2) { animation-delay: 0.2s; }
+.navbar-item:nth-child(3) { animation-delay: 0.3s; }
+.navbar-item:nth-child(4) { animation-delay: 0.4s; }
+.navbar-item:nth-child(5) { animation-delay: 0.5s; }
+.navbar-item:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes item-reveal {
+  0% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Liens du menu */
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  background-color: transparent;
+}
+
+.navbar-link svg {
+  margin-right: 0.4rem;
+  transition: transform 0.3s ease;
+}
+
+.navbar-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.navbar-link:hover svg {
+  transform: translateY(-2px);
+}
+
+/* Lien actif */
+.navbar-link.active {
+  background-color: rgba(255, 255, 255, 0.15);
+  font-weight: bold;
+}
+
+/* Bouton Calculer */
+.navbar-link.calculate-btn {
+  background-color: #ff5252;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  margin-left: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(255, 82, 82, 0.3);
+}
+
+.navbar-link.calculate-btn:hover {
+  background-color: #ff3838;
+  box-shadow: 0 4px 8px rgba(255, 82, 82, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Effet de ripple au clic */
+.ripple {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Animation d'entrée pour la navbar */
+.navbar {
+  animation: navbar-reveal 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  transform: translateY(-100%);
+}
+
+@keyframes navbar-reveal {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(0); }
+}
+
+/* Bouton toggle pour mobile */
+.navbar-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+/* Version mobile */
+@media (max-width: 768px) {
+  .navbar-toggle {
+    display: block;
+  }
+  
+  .navbar-menu {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: #0077a2;
+    padding: 1rem;
+    transform: translateY(-100%);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+  }
+  
+  .navbar-menu.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .navbar-item {
+    margin: 0.5rem 0;
+    width: 100%;
+  }
+  
+  .navbar-link {
+    justify-content: center;
+    padding: 0.75rem;
+    width: 100%;
+  }
+  
+  .navbar-link.calculate-btn {
+    margin: 0.5rem 0 0;
+    justify-content: center;
+  }
+}
+
+/* Animation au survol menu */
+.navbar-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: white;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+.navbar-link:hover::before {
+  width: 70%;
+  opacity: 1;
+}
+
+/* Empêche l'animation de soulignement sur le bouton */
+.navbar-link.calculate-btn::before {
+  display: none;
+}
