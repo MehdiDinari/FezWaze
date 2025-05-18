@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import '../styles/components/Navbar.css';
@@ -321,24 +320,3 @@ function Navbar() {
 }
 
 export default Navbar;
-=======
-import { Link } from 'react-router-dom';
-
-function Navbar() {
-  return (
-    <nav>
-      <ul>
-        <li><Link to="/">Accueil</Link></li>
-        <li><Link to="/axes">Axes Routiers</Link></li>
-        <li><Link to="/temps">Temps de Trajet</Link></li>
-        <li><Link to="/itineraires">Itinéraires</Link></li>
-        <li><Link to="/map">Carte des Axes</Link></li>
-        <li><Link to="/itineraire_map">Carte des Itinéraires</Link></li>
-        <li><Link to="/itineraire_form">Calcul Itinéraire</Link></li>
-      </ul>
-    </nav>
-  );
-}
-
-export default Navbar;
->>>>>>> 1379eb69c40c8b8b40e0a8f90dbd037ea1900970

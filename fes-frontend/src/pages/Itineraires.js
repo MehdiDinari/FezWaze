@@ -6,7 +6,7 @@ function Itineraires() {
   const [itineraires, setItineraires] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/itineraire/')
+    axios.get('http://localhost:8000/api/api/itineraires/')
       .then(response => setItineraires(response.data))
       .catch(error => console.error(error));
   }, []);

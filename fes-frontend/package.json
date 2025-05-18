@@ -11,12 +11,8 @@
     "react-leaflet": "^5.0.0",
     "react-leaflet-animated-marker": "^1.0.2",
     "react-router-dom": "^7.6.0",
-<<<<<<< HEAD
     "react-scripts": "5.0.1",
     "web-vitals": "^5.0.1"
-=======
-    "react-scripts": "5.0.1"
->>>>>>> 1379eb69c40c8b8b40e0a8f90dbd037ea1900970
   },
   "scripts": {
     "start": "react-scripts start",

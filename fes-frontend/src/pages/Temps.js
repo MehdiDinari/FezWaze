@@ -5,7 +5,7 @@ function Temps() {
   const [temps, setTemps] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/temps/')
+    axios.get('http://localhost:8000/api/api/temps/')
       .then(response => setTemps(response.data))
       .catch(error => console.error(error));
   }, []);

@@ -1,16 +1,11 @@
-<<<<<<< HEAD
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-=======
-from rest_framework import viewsets
->>>>>>> 1379eb69c40c8b8b40e0a8f90dbd037ea1900970
 from django.http import JsonResponse, HttpResponse
 from .models import AxeRoutier, TempsTrajet, Itineraire
 from .serializers import AxeRoutierSerializer, TempsTrajetSerializer, ItineraireSerializer
 import folium
 import ast
-<<<<<<< HEAD
 import os
 import json
 import datetime
@@ -19,31 +14,15 @@ from .ml_prediction import predicteur
 
 # 📍 Liste des Points de Départ et d'Arrivée
 @api_view(['GET'])
-=======
-from django.http import HttpResponse, JsonResponse
-from .models import Itineraire, AxeRoutier
-from django.conf import settings
-import os
-
-# 📍 Liste des Points de Départ et d'Arrivée
-from django.http import JsonResponse
-from .models import AxeRoutier
-
->>>>>>> 1379eb69c40c8b8b40e0a8f90dbd037ea1900970
 def liste_points(request):
     points_depart = list(AxeRoutier.objects.values_list('point_depart', flat=True).distinct())
     points_arrivee = list(AxeRoutier.objects.values_list('point_arrivee', flat=True).distinct())
 
-<<<<<<< HEAD
     return Response({
-=======
-    return JsonResponse({
->>>>>>> 1379eb69c40c8b8b40e0a8f90dbd037ea1900970
         "points_depart": sorted(points_depart),
         "points_arrivee": sorted(points_arrivee)
     })
 
-<<<<<<< HEAD
 # 🚗 Calcul d'itinéraire avec prédiction de trafic
 @api_view(['POST'])
 def calculer_itineraire(request):
@@ -182,96 +161,6 @@ def prediction_trafic(request):
     
     return Response(response_data)
 
-=======
-
-
-# 🚗 Vue pour la Création des Itinéraires Dynamiques
-class ItineraireViewSet(viewsets.ModelViewSet):
-    queryset = Itineraire.objects.all()
-    serializer_class = ItineraireSerializer
-
-    def create(self, request, *args, **kwargs):
-        point_depart = request.data.get('point_depart')
-        point_arrivee = request.data.get('point_arrivee')
-        heure_pointe = request.data.get('heure_pointe', 'matin')
-        axes_ids = request.data.get('axes', [])
-
-        if not point_depart or not point_arrivee or not axes_ids:
-            return JsonResponse({'error': 'Les points de départ, d\'arrivée et les axes sont obligatoires.'}, status=400)
-
-        # Calcul du temps total
-        temps_total_min = 0
-        axes_utilises = []
-
-        for axe_id in axes_ids:
-            axe = AxeRoutier.objects.get(id=axe_id)
-            temps = TempsTrajet.objects.filter(axe=axe, heure_pointe=heure_pointe).first()
-            if temps:
-                temps_total_min += temps.temps_moyen_min
-                axes_utilises.append(axe)
-
-        if not axes_utilises:
-            return JsonResponse({'error': 'Aucun itinéraire direct trouvé pour ce trajet.'}, status=404)
-
-        # Création de l'itinéraire
-        itineraire = Itineraire.objects.create(
-            point_depart=point_depart,
-            point_arrivee=point_arrivee,
-            temps_total_min=temps_total_min,
-            heure_pointe=heure_pointe
-        )
-        itineraire.axes.set(axes_utilises)
-        itineraire.save()
-
-        serializer = self.get_serializer(itineraire)
-        return JsonResponse(serializer.data)
-
-def carte_itineraire_dynamique(request, itineraire_id):
-    try:
-        itineraire = Itineraire.objects.get(id=itineraire_id)
-        m = folium.Map(location=[34.0331, -4.9998], zoom_start=13)
-
-        # Ajouter les axes de l'itinéraire
-        for axe in itineraire.axes.all():
-            if axe.coords:
-                coords_list = ast.literal_eval(axe.coords)
-                folium.PolyLine(
-                    coords_list,
-                    color="green",
-                    weight=5,
-                    opacity=0.8,
-                    popup=f"{axe.nom} ({axe.point_depart} - {axe.point_arrivee})"
-                ).add_to(m)
-
-        # Marqueurs pour le point de départ et d'arrivée
-        if itineraire.axes.first().coords:
-            start_coords = ast.literal_eval(itineraire.axes.first().coords)[0]
-            folium.Marker(
-                location=start_coords,
-                popup="Départ",
-                icon=folium.Icon(color="blue")
-            ).add_to(m)
-
-        if itineraire.axes.last().coords:
-            end_coords = ast.literal_eval(itineraire.axes.last().coords)[-1]
-            folium.Marker(
-                location=end_coords,
-                popup="Arrivée",
-                icon=folium.Icon(color="red")
-            ).add_to(m)
-
-        # Sauvegarder la carte en HTML
-        map_file = f'recommandations/maps/itineraire_{itineraire_id}.html'
-        m.save(map_file)
-
-        # Lire le contenu du fichier HTML et l'envoyer comme réponse
-        with open(map_file, 'r', encoding='utf-8') as f:
-            content = f.read()
-        return HttpResponse(content, content_type='text/html')
-
-    except Itineraire.DoesNotExist:
-        return JsonResponse({'error': 'Itinéraire non trouvé'}, status=404)
->>>>>>> 1379eb69c40c8b8b40e0a8f90dbd037ea1900970
 # 🌍 Carte des Axes Routiers
 def carte_axes(request):
     m = folium.Map(location=[34.0331, -4.9998], zoom_start=13)
@@ -281,7 +170,6 @@ def carte_axes(request):
     for axe in axes:
         if axe.coords:
             coords_list = ast.literal_eval(axe.coords)
-<<<<<<< HEAD
             
             # Prédire le niveau de trafic actuel
             niveau_trafic = predicteur.predict_trafic_level(axe)
@@ -300,14 +188,6 @@ def carte_axes(request):
                 weight=5,
                 opacity=0.7,
                 popup=f"{axe.nom} ({axe.point_depart} - {axe.point_arrivee})<br>Trafic: {niveau_trafic}"
-=======
-            folium.PolyLine(
-                coords_list,
-                color="blue",
-                weight=5,
-                opacity=0.7,
-                popup=f"{axe.nom} ({axe.point_depart} - {axe.point_arrivee})"
->>>>>>> 1379eb69c40c8b8b40e0a8f90dbd037ea1900970
             ).add_to(m)
 
     # Sauvegarder la carte en HTML
@@ -319,10 +199,6 @@ def carte_axes(request):
         content = f.read()
     return HttpResponse(content, content_type='text/html')
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 1379eb69c40c8b8b40e0a8f90dbd037ea1900970
 # 🛣️ Carte des Itinéraires
 def carte_itineraire(request, itineraire_id):
     try:
@@ -333,7 +209,6 @@ def carte_itineraire(request, itineraire_id):
         for axe in itineraire.axes.all():
             if axe.coords:
                 coords_list = ast.literal_eval(axe.coords)
-<<<<<<< HEAD
                 
                 # Prédire le niveau de trafic actuel
                 niveau_trafic = predicteur.predict_trafic_level(axe)
@@ -368,30 +243,6 @@ def carte_itineraire(request, itineraire_id):
             folium.Marker(
                 location=end_coords,
                 popup="Arrivée: " + itineraire.point_arrivee,
-=======
-                folium.PolyLine(
-                    coords_list,
-                    color="green",
-                    weight=5,
-                    opacity=0.8,
-                    popup=f"{axe.nom} ({axe.point_depart} - {axe.point_arrivee})"
-                ).add_to(m)
-
-        # Marqueurs pour le point de départ et d'arrivée
-        if itineraire.axes.first().coords:
-            start_coords = ast.literal_eval(itineraire.axes.first().coords)[0]
-            folium.Marker(
-                location=start_coords,
-                popup="Départ",
-                icon=folium.Icon(color="blue")
-            ).add_to(m)
-
-        if itineraire.axes.last().coords:
-            end_coords = ast.literal_eval(itineraire.axes.last().coords)[-1]
-            folium.Marker(
-                location=end_coords,
-                popup="Arrivée",
->>>>>>> 1379eb69c40c8b8b40e0a8f90dbd037ea1900970
                 icon=folium.Icon(color="red")
             ).add_to(m)
 
@@ -407,7 +258,6 @@ def carte_itineraire(request, itineraire_id):
     except Itineraire.DoesNotExist:
         return JsonResponse({'error': 'Itinéraire non trouvé'}, status=404)
 
-<<<<<<< HEAD
 # Carte des Itinéraires Dynamique (avec animation)
 def carte_itineraire_dynamique(request, itineraire_id):
     try:
@@ -455,53 +305,39 @@ def carte_itineraire_dynamique(request, itineraire_id):
                 icon=folium.Icon(color="red")
             ).add_to(m)
 
-        # Ajouter un script pour l'animation
+        # Ajouter un script pour l'animation du parcours
         animation_js = """
         <script>
-            // Animation de la voiture le long de l'itinéraire
-            var car = L.marker([0, 0], {
-                icon: L.divIcon({
-                    html: '<div style="font-size: 24px;">🚗</div>',
-                    iconSize: [24, 24],
-                    className: 'car-icon'
-                })
-            }).addTo(map);
-            
-            // Récupérer tous les points de l'itinéraire
-            var allPoints = [];
-            """
+        // Animation du parcours
+        var marker = L.marker([0, 0], {icon: L.icon({iconUrl: 'https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/images/marker-icon.png', iconSize: [25, 41], iconAnchor: [12, 41]})}).addTo(map);
+        var route = %s;
+        var i = 0;
+        var animationSpeed = 500; // ms entre chaque point
         
-        # Ajouter tous les points de l'itinéraire pour l'animation
-        for axe in itineraire.axes.all():
-            if axe.coords:
-                coords_list = ast.literal_eval(axe.coords)
-                animation_js += f"allPoints = allPoints.concat({json.dumps(coords_list)});\n"
-        
-        animation_js += """
-            var currentPoint = 0;
-            
-            function animateCar() {
-                if (currentPoint < allPoints.length) {
-                    car.setLatLng(allPoints[currentPoint]);
-                    currentPoint++;
-                    setTimeout(animateCar, 500);
-                }
+        function animateRoute() {
+            if (i < route.length) {
+                marker.setLatLng(route[i]);
+                i++;
+                setTimeout(animateRoute, animationSpeed);
             }
-            
-            // Démarrer l'animation après 1 seconde
-            setTimeout(animateCar, 1000);
+        }
+        
+        // Démarrer l'animation après 1 seconde
+        setTimeout(function() {
+            animateRoute();
+        }, 1000);
         </script>
-        """
+        """ % json.dumps([coord for axe in itineraire.axes.all() if axe.coords for coord in ast.literal_eval(axe.coords)])
         
         # Sauvegarder la carte en HTML
         map_file = f'recommandations/maps/itineraire_dynamique_{itineraire_id}.html'
         m.save(map_file)
         
-        # Ajouter le script d'animation à la fin du fichier HTML
+        # Ajouter le script d'animation au HTML
         with open(map_file, 'r', encoding='utf-8') as f:
             content = f.read()
         
-        # Insérer le script juste avant la fermeture du body
+        # Insérer le script avant la fermeture du body
         content = content.replace('</body>', animation_js + '</body>')
         
         # Réécrire le fichier avec l'animation
@@ -516,19 +352,15 @@ def carte_itineraire_dynamique(request, itineraire_id):
 
     except Itineraire.DoesNotExist:
         return JsonResponse({'error': 'Itinéraire non trouvé'}, status=404)
-=======
->>>>>>> 1379eb69c40c8b8b40e0a8f90dbd037ea1900970
 
-# 📌 Vues pour les Modèles
-class AxeRoutierViewSet(viewsets.ReadOnlyModelViewSet):
+# ViewSets pour l'API REST
+class AxeRoutierViewSet(viewsets.ModelViewSet):
     queryset = AxeRoutier.objects.all()
     serializer_class = AxeRoutierSerializer
 
-
-class TempsTrajetViewSet(viewsets.ReadOnlyModelViewSet):
+class TempsTrajetViewSet(viewsets.ModelViewSet):
     queryset = TempsTrajet.objects.all()
     serializer_class = TempsTrajetSerializer
-
 
 class ItineraireViewSet(viewsets.ModelViewSet):
     queryset = Itineraire.objects.all()

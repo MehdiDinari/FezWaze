@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Link } from 'react-router-dom';
 import '../styles/pages/Home.css';
 
@@ -108,13 +107,6 @@ function Home() {
           Calculer mon itinéraire
         </Link>
       </section>
-=======
-function Home() {
-  return (
-    <div>
-      <h1>Bienvenue à Fès</h1>
-      <p>Explorez les itinéraires optimaux pour naviguer à travers la ville.</p>
->>>>>>> 1379eb69c40c8b8b40e0a8f90dbd037ea1900970
     </div>
   );
 }
