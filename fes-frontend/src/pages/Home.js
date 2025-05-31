@@ -8,13 +8,15 @@ const GlobeComponent = () => {
   const mountRef = useRef(null);
   
   useEffect(() => {
+    const mount = mountRef.current; // Copie de la référence pour le cleanup
+
     // Scene setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     
     renderer.setSize(300, 300);
-    mountRef.current.appendChild(renderer.domElement);
+    mount.appendChild(renderer.domElement);
     
     // Camera position
     camera.position.z = 2;
@@ -133,7 +135,7 @@ const GlobeComponent = () => {
     textDiv.style.fontWeight = 'bold';
     textDiv.style.pointerEvents = 'none';
     textDiv.style.display = 'none'; // Start hidden, will show when label is in front
-    mountRef.current.appendChild(textDiv);
+    mount.appendChild(textDiv);
     
     // Variables for interactive rotation
     let isMouseDown = false;
@@ -321,19 +323,18 @@ const GlobeComponent = () => {
     
     // Clean up on component unmount
     return () => {
-      if (mountRef.current) {
+      if (mount) {
         renderer.domElement.removeEventListener('mousedown', onMouseDown);
         renderer.domElement.removeEventListener('mousemove', onMouseMove);
         renderer.domElement.removeEventListener('mouseup', onMouseUp);
         renderer.domElement.removeEventListener('mouseout', onMouseOut);
         renderer.domElement.removeEventListener('mouseenter', onMouseEnter);
         
-        // Remove the label
         if (textDiv.parentNode) {
           textDiv.parentNode.removeChild(textDiv);
         }
         
-        mountRef.current.removeChild(renderer.domElement);
+        mount.removeChild(renderer.domElement);
       }
     };
   }, []);
