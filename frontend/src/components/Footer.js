@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '../styles/components.css';
 
 const Footer = () => {
   const [stats, setStats] = useState({
@@ -52,358 +53,278 @@ const Footer = () => {
   }, []);
 
   const socialLinks = [
-    { icon: '📘', name: 'Facebook', color: '#1877f2' },
-    { icon: '🐦', name: 'Twitter', color: '#1da1f2' },
-    { icon: '📷', name: 'Instagram', color: '#e4405f' },
-    { icon: '💼', name: 'LinkedIn', color: '#0077b5' },
-    { icon: '📺', name: 'YouTube', color: '#ff0000' }
+    {
+      name: 'Facebook',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      ),
+      url: 'https://facebook.com'
+    },
+    {
+      name: 'Twitter',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+          <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+        </svg>
+      ),
+      url: 'https://twitter.com'
+    },
+    {
+      name: 'LinkedIn',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      ),
+      url: 'https://linkedin.com'
+    },
+    {
+      name: 'Instagram',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+          <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
+        </svg>
+      ),
+      url: 'https://instagram.com'
+    },
+    {
+      name: 'YouTube',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+      ),
+      url: 'https://youtube.com'
+    }
   ];
 
   return (
-    <>
+    <footer className="footer">
       <style>{`
-        @keyframes slideInUp {
-          from { transform: translateY(100%); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
+        @keyframes typewriter {
+          from { width: 0; }
+          to { width: 100%; }
         }
         
-        @keyframes fadeInUp {
-          from { transform: translateY(30px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
+        @keyframes blink {
+          50% { border-color: transparent; }
         }
         
-        @keyframes pulse {
+        @keyframes slideInFromBottom {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes heartbeat {
           0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.05); }
+          50% { transform: scale(1.2); }
         }
         
-        @keyframes bounce {
-          0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-          40% { transform: translateY(-10px); }
-          60% { transform: translateY(-5px); }
+        @keyframes shimmer {
+          0% { background-position: -200px 0; }
+          100% { background-position: 200px 0; }
         }
         
-        @keyframes shine {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
+        .copyright-section {
+          margin-top: 2rem;
+          padding-top: 2rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.2);
+          text-align: center;
+          animation: slideInFromBottom 1s ease-out 0.5s both;
         }
         
-        @keyframes rotate {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+        .copyright-text {
+          font-size: 0.95rem;
+          color: rgba(255, 255, 255, 0.9);
+          margin-bottom: 0.8rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
         }
         
-        .social-icon {
-          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-          cursor: pointer;
+        .heart-icon {
+          color: #e74c3c;
+          font-size: 1.2rem;
+          display: inline-block;
+          animation: heartbeat 1.5s ease-in-out infinite;
         }
         
-        .social-icon:hover {
-          transform: translateY(-5px) scale(1.2);
-          filter: brightness(1.2);
+        .creators-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 2rem;
+          flex-wrap: wrap;
+          margin-top: 1rem;
         }
         
-        .stat-card {
+        .creator-card {
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 12px;
+          padding: 1rem 2rem;
+          position: relative;
+          overflow: hidden;
           transition: all 0.3s ease;
           cursor: pointer;
         }
         
-        .stat-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .shine-effect {
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .shine-effect::before {
+        .creator-card::before {
           content: '';
           position: absolute;
           top: 0;
-          left: -100%;
-          width: 100%;
+          left: -200px;
+          width: 200px;
           height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-          animation: shine 3s infinite;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+          );
+          animation: shimmer 3s infinite;
         }
         
-        .footer-wave {
-          position: absolute;
-          top: -50px;
-          left: 0;
-          width: 100%;
-          height: 50px;
-          background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3e%3cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23667eea'%3e%3c/path%3e%3c/svg%3e") no-repeat;
-          background-size: cover;
+        .creator-card:hover {
+          transform: translateY(-5px) scale(1.05);
+          background: rgba(255, 255, 255, 0.15);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .creator-name {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #fff;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          position: relative;
+          z-index: 1;
+        }
+        
+        .creator-role {
+          font-size: 0.85rem;
+          color: rgba(255, 255, 255, 0.7);
+          margin-top: 0.3rem;
+        }
+        
+        .creator-icon {
+          font-size: 1.5rem;
+        }
+        
+        .year {
+          color: #3498db;
+          font-weight: 700;
+          font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+          .creators-container {
+            gap: 1rem;
+          }
+          
+          .creator-card {
+            padding: 0.8rem 1.5rem;
+          }
+          
+          .creator-name {
+            font-size: 1rem;
+          }
         }
       `}</style>
       
-      <footer style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 30%, #f093fb 70%, #f5576c 100%)',
-        color: '#fff',
-        margin: '1rem',
-        borderRadius: '25px 25px 0 0',
-        position: 'relative',
-        overflow: 'hidden',
-        animation: isVisible ? 'slideInUp 0.8s ease-out' : 'none'
-      }}>
-        {/* Effet de vague en haut */}
-        <div className="footer-wave" />
-        
-        {/* Contenu principal */}
-        <div style={{
-          padding: '3rem 2rem 1rem',
-          position: 'relative',
-          zIndex: 2
-        }}>
-          {/* Section des statistiques */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '1.5rem',
-            marginBottom: '3rem',
-            animation: 'fadeInUp 1s ease-out 0.3s both'
-          }}>
-            <div className="stat-card shine-effect" style={{
-              background: 'rgba(255, 255, 255, 0.1)',
-              padding: '1.5rem',
-              borderRadius: '20px',
-              textAlign: 'center',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 255, 255, 0.2)'
-            }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>🔍</div>
-              <div style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '0.3rem' }}>
-                {stats.totalSearches.toLocaleString()}
-              </div>
-              <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>Recherches effectuées</div>
+      <div className="footer-wave" />
+      
+      <div className="footer-content">
+        <div className="stats-grid">
+          <div className="stat-card">
+            <div className="stat-icon">🔍</div>
+            <div className="stat-value">
+              {stats.totalSearches.toLocaleString()}
             </div>
-            
-            <div className="stat-card shine-effect" style={{
-              background: 'rgba(255, 255, 255, 0.1)',
-              padding: '1.5rem',
-              borderRadius: '20px',
-              textAlign: 'center',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 255, 255, 0.2)'
-            }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>🛣️</div>
-              <div style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '0.3rem' }}>
-                {stats.routesCalculated.toLocaleString()}
-              </div>
-              <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>Itinéraires calculés</div>
-            </div>
-            
-            <div className="stat-card shine-effect" style={{
-              background: 'rgba(255, 255, 255, 0.1)',
-              padding: '1.5rem',
-              borderRadius: '20px',
-              textAlign: 'center',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 255, 255, 0.2)'
-            }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>⏰</div>
-              <div style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '0.3rem' }}>
-                {stats.usersSaved.toLocaleString()}h
-              </div>
-              <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>Heures économisées</div>
-            </div>
-            
-            <div className="stat-card shine-effect" style={{
-              background: 'rgba(255, 255, 255, 0.1)',
-              padding: '1.5rem',
-              borderRadius: '20px',
-              textAlign: 'center',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 255, 255, 0.2)'
-            }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>🌍</div>
-              <div style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '0.3rem' }}>
-                {stats.kmTraveled.toLocaleString()}
-              </div>
-              <div style={{ fontSize: '0.9rem', opacity: 0.9 }}>Kilomètres parcourus</div>
-            </div>
+            <div className="stat-label">Recherches effectuées</div>
           </div>
           
-          {/* Section des informations et liens */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '2rem',
-            marginBottom: '2rem',
-            animation: 'fadeInUp 1s ease-out 0.6s both'
-          }}>
-            {/* À propos */}
-            <div>
-              <h3 style={{
-                marginBottom: '1rem',
-                fontSize: '1.3rem',
-                fontWeight: '600'
-              }}>
-                🚀 À propos de MapExplorer Pro
-              </h3>
-              <p style={{
-                lineHeight: '1.6',
-                opacity: 0.9,
-                margin: 0
-              }}>
-                Votre compagnon de navigation intelligent qui vous aide à explorer le monde avec style. 
-                Découvrez de nouveaux lieux, planifiez vos itinéraires et vivez l'aventure !
-              </p>
+          <div className="stat-card">
+            <div className="stat-icon">🛣️</div>
+            <div className="stat-value">
+              {stats.routesCalculated.toLocaleString()}
             </div>
-            
-            {/* Liens rapides */}
-            <div>
-              <h3 style={{
-                marginBottom: '1rem',
-                fontSize: '1.3rem',
-                fontWeight: '600'
-              }}>
-                ⚡ Liens rapides
-              </h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                {['🏠 Accueil', '🗺️ Cartes', '📱 Mobile App', '🎯 API', '📞 Support'].map((link, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      cursor: 'pointer',
-                      padding: '0.5rem 0',
-                      transition: 'all 0.3s ease',
-                      borderRadius: '8px',
-                      opacity: 0.9
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.transform = 'translateX(10px)';
-                      e.target.style.opacity = '1';
-                      e.target.style.background = 'rgba(255, 255, 255, 0.1)';
-                      e.target.style.padding = '0.5rem 1rem';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.transform = 'translateX(0)';
-                      e.target.style.opacity = '0.9';
-                      e.target.style.background = 'transparent';
-                      e.target.style.padding = '0.5rem 0';
-                    }}
-                  >
-                    {link}
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Contact */}
-            <div>
-              <h3 style={{
-                marginBottom: '1rem',
-                fontSize: '1.3rem',
-                fontWeight: '600'
-              }}>
-                📬 Contact
-              </h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', opacity: 0.9 }}>
-                <div>📧 contact@mapexplorer.pro</div>
-                <div>📱 +212 6 XX XX XX XX</div>
-                <div>📍 Casablanca, Maroc</div>
-                <div style={{
-                  display: 'flex',
-                  gap: '1rem',
-                  marginTop: '1rem'
-                }}>
-                  {socialLinks.map((social, index) => (
-                    <div
-                      key={index}
-                      className="social-icon"
-                      style={{
-                        fontSize: '1.5rem',
-                        padding: '0.5rem',
-                        borderRadius: '12px',
-                        background: 'rgba(255, 255, 255, 0.1)',
-                        backdropFilter: 'blur(10px)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        animationDelay: `${index * 0.1}s`
-                      }}
-                      title={social.name}
-                    >
-                      {social.icon}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <div className="stat-label">Itinéraires calculés</div>
           </div>
           
-          {/* Ligne de séparation */}
-          <div style={{
-            height: '2px',
-            background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent)',
-            margin: '2rem 0',
-            animation: 'fadeInUp 1s ease-out 0.9s both'
-          }} />
+          <div className="stat-card">
+            <div className="stat-icon">👥</div>
+            <div className="stat-value">
+              {stats.usersSaved.toLocaleString()}
+            </div>
+            <div className="stat-label">Utilisateurs satisfaits</div>
+          </div>
           
-          {/* Copyright et informations finales */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '1rem',
-            opacity: 0.8,
-            animation: 'fadeInUp 1s ease-out 1.2s both'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span style={{ animation: 'pulse 2s infinite' }}>💖</span>
-              <span>Fait avec amour au Maroc</span>
+          <div className="stat-card">
+            <div className="stat-icon">🚗</div>
+            <div className="stat-value">
+              {stats.kmTraveled.toLocaleString()}
             </div>
-            
-            <div style={{ textAlign: 'center', flex: 1 }}>
-              © 2025 MapExplorer Pro. Tous droits réservés.
-            </div>
-            
-            <div style={{ display: 'flex', gap: '1rem', fontSize: '0.9rem' }}>
-              <span style={{ cursor: 'pointer', transition: 'opacity 0.3s ease' }}>
-                Confidentialité
-              </span>
-              <span style={{ cursor: 'pointer', transition: 'opacity 0.3s ease' }}>
-                Conditions
-              </span>
-              <span style={{ cursor: 'pointer', transition: 'opacity 0.3s ease' }}>
-                Cookies
-              </span>
-            </div>
+            <div className="stat-label">Kilomètres parcourus</div>
           </div>
         </div>
         
-        {/* Particules flottantes */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          overflow: 'hidden',
-          pointerEvents: 'none'
-        }}>
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              style={{
-                position: 'absolute',
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: `${2 + Math.random() * 3}px`,
-                height: `${2 + Math.random() * 3}px`,
-                background: 'rgba(255, 255, 255, 0.6)',
-                borderRadius: '50%',
-                animation: `bounce ${2 + Math.random() * 2}s infinite ease-in-out`,
-                animationDelay: `${Math.random() * 2}s`
-              }}
-            />
+        <div className="social-links">
+          {socialLinks.map((link, index) => (
+            <a
+              key={index}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-icon"
+              title={link.name}
+            >
+              {link.icon}
+            </a>
           ))}
         </div>
-      </footer>
-    </>
+        
+        {/* Section des droits d'auteur */}
+        <div className="copyright-section">
+          <p className="copyright-text">
+            © <span className="year">{new Date().getFullYear()}</span> 
+MapExplorer Pro
+            <span className="heart-icon">❤️</span> 
+            Créé avec passion par
+          </p>
+          
+          <div className="creators-container">
+            <div className="creator-card">
+              <h3 className="creator-name">
+                <span className="creator-icon">👩‍💻</span>
+                Chayma Chliyah
+              </h3>
+              <p className="creator-role">Développeuse Full Stack</p>
+            </div>
+            
+            <div className="creator-card">
+              <h3 className="creator-name">
+                <span className="creator-icon">👨‍💻</span>
+                Mehdi Dinari
+              </h3>
+              <p className="creator-role">Développeur Full Stack</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };
 

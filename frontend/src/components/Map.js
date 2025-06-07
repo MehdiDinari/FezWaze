@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import '../styles/components.css';
 
 // Création d'icônes personnalisées pour les points de départ et d'arrivée
 const startIcon = L.divIcon({
@@ -78,7 +79,24 @@ const Map = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [mapType, setMapType] = useState('normal'); // État pour le type de carte
   const mapRef = useRef(null);
+
+  // Configuration des différents types de tuiles
+  const tileLayers = {
+    normal: {
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    },
+    satellite: {
+      url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      attribution: '&copy; <a href="https://www.esri.com/">Esri</a> i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    },
+    terrain: {
+      url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+      attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>'
+    }
+  };
 
   // Fonction pour rechercher un lieu avec l'API backend
   const searchLocation = async (query) => {
@@ -234,12 +252,12 @@ const Map = () => {
       display: 'flex',
       flexDirection: 'column',
       height: '100vh',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      fontFamily: "'Poppins', 'Helvetica Neue', Arial, sans-serif",
+      background: 'linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #a5b4fc 100%)',
+      fontFamily: "'Inter', 'Roboto', Arial, sans-serif",
       position: 'relative'
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
         
         @keyframes pulse {
           0% { transform: scale(1); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); }
@@ -275,9 +293,9 @@ const Map = () => {
         
         .floating-card {
           backdrop-filter: blur(20px);
-          background: rgba(255, 255, 255, 0.95);
+          background: rgba(255, 255, 255, 0.92);
           border: 1px solid rgba(255, 255, 255, 0.2);
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 24px rgba(52, 99, 235, 0.08);
         }
         
         .glass-button {
@@ -324,8 +342,8 @@ const Map = () => {
             boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.1)'
           }}
           onFocus={(e) => {
-            e.target.style.borderColor = '#667eea';
-            e.target.style.boxShadow = 'inset 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(102, 126, 234, 0.1)';
+            e.target.style.borderColor = '#3498db';
+            e.target.style.boxShadow = 'inset 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(52, 152, 219, 0.2)';
           }}
           onBlur={(e) => {
             e.target.style.borderColor = 'transparent';
@@ -343,7 +361,7 @@ const Map = () => {
           style={{
             marginLeft: '1rem',
             padding: '1rem 2rem',
-            background: loading ? '#94a3b8' : 'linear-gradient(135deg, #667eea, #764ba2)',
+            background: loading ? '#94a3b8' : 'linear-gradient(135deg, #3498db, #2c3e50)',
             color: '#fff',
             fontWeight: '600',
             border: 'none',
@@ -429,7 +447,7 @@ const Map = () => {
                 borderBottom: index < searchResults.length - 1 ? '1px solid rgba(0, 0, 0, 0.1)' : 'none',
                 transition: 'background 0.2s ease'
               }}
-              onMouseEnter={(e) => e.target.style.background = 'rgba(102, 126, 234, 0.1)'}
+              onMouseEnter={(e) => e.target.style.background = 'rgba(52, 152, 219, 0.1)'}
               onMouseLeave={(e) => e.target.style.background = 'transparent'}>
                 <span style={{ fontWeight: '500', color: '#1e293b', flex: 1, marginRight: '1rem' }}>
                   {result.name}
@@ -539,13 +557,13 @@ const Map = () => {
             cursor: (!startPoint || !endPoint || loading) ? 'not-allowed' : 'pointer',
             transition: 'all 0.3s ease',
             fontSize: '1rem',
-            background: (!startPoint || !endPoint || loading) ? '#94a3b8' : 'linear-gradient(135deg, #667eea, #764ba2)',
+            background: (!startPoint || !endPoint || loading) ? '#94a3b8' : 'linear-gradient(135deg, #3498db, #2c3e50)',
             color: '#fff'
           }}
           onMouseEnter={(e) => {
             if (startPoint && endPoint && !loading) {
               e.target.style.transform = 'translateY(-3px)';
-              e.target.style.boxShadow = '0 15px 30px rgba(102, 126, 234, 0.4)';
+              e.target.style.boxShadow = '0 15px 30px rgba(52, 152, 219, 0.4)';
             }
           }}
           onMouseLeave={(e) => {
@@ -649,9 +667,117 @@ const Map = () => {
         margin: '0 1rem 1rem',
         borderRadius: '20px',
         overflow: 'hidden',
-        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
-        animation: 'fadeInUp 1s ease'
+        boxShadow: '0 4px 24px rgba(52, 99, 235, 0.08)',
+        animation: 'fadeInUp 1s ease',
+        position: 'relative'
       }}>
+        {/* Contrôles de type de carte */}
+        <div style={{
+          position: 'absolute',
+          top: '1rem',
+          right: '1rem',
+          zIndex: 1000,
+          display: 'flex',
+          gap: '0.5rem',
+          padding: '0.5rem',
+          borderRadius: '15px',
+          animation: 'fadeIn 1s ease'
+        }} className="floating-card">
+          <button
+            onClick={() => setMapType('normal')}
+            style={{
+              padding: '0.75rem 1.25rem',
+              background: mapType === 'normal' ? 'linear-gradient(135deg, #3498db, #2c3e50)' : 'rgba(255, 255, 255, 0.85)',
+              color: mapType === 'normal' ? '#fff' : '#2c3e50',
+              border: 'none',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              fontSize: '0.9rem',
+              fontWeight: '600',
+              transition: 'all 0.3s ease',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}
+            onMouseEnter={(e) => {
+              if (mapType !== 'normal') {
+                e.target.style.background = 'rgba(255, 255, 255, 0.95)';
+                e.target.style.transform = 'translateY(-2px)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (mapType !== 'normal') {
+                e.target.style.background = 'rgba(255, 255, 255, 0.85)';
+                e.target.style.transform = 'translateY(0)';
+              }
+            }}
+          >
+            🗺️ Normal
+          </button>
+          <button
+            onClick={() => setMapType('satellite')}
+            style={{
+              padding: '0.75rem 1.25rem',
+              background: mapType === 'satellite' ? 'linear-gradient(135deg, #3498db, #2c3e50)' : 'rgba(255, 255, 255, 0.85)',
+              color: mapType === 'satellite' ? '#fff' : '#2c3e50',
+              border: 'none',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              fontSize: '0.9rem',
+              fontWeight: '600',
+              transition: 'all 0.3s ease',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}
+            onMouseEnter={(e) => {
+              if (mapType !== 'satellite') {
+                e.target.style.background = 'rgba(255, 255, 255, 0.95)';
+                e.target.style.transform = 'translateY(-2px)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (mapType !== 'satellite') {
+                e.target.style.background = 'rgba(255, 255, 255, 0.8)';
+                e.target.style.transform = 'translateY(0)';
+              }
+            }}
+          >
+            🛰️ Satellite
+          </button>
+          <button
+            onClick={() => setMapType('terrain')}
+            style={{
+              padding: '0.75rem 1.25rem',
+              background: mapType === 'terrain' ? 'linear-gradient(135deg, #3498db, #2c3e50)' : 'rgba(255, 255, 255, 0.85)',
+              color: mapType === 'terrain' ? '#fff' : '#2c3e50',
+              border: 'none',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              fontSize: '0.9rem',
+              fontWeight: '600',
+              transition: 'all 0.3s ease',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}
+            onMouseEnter={(e) => {
+              if (mapType !== 'terrain') {
+                e.target.style.background = 'rgba(255, 255, 255, 0.95)';
+                e.target.style.transform = 'translateY(-2px)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (mapType !== 'terrain') {
+                e.target.style.background = 'rgba(255, 255, 255, 0.8)';
+                e.target.style.transform = 'translateY(0)';
+              }
+            }}
+          >
+            ⛰️ Terrain
+          </button>
+        </div>
+        
         <MapContainer
           center={center}
           zoom={13}
@@ -659,8 +785,9 @@ const Map = () => {
           whenCreated={mapInstance => { mapRef.current = mapInstance; }}
         >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            key={mapType}
+            attribution={tileLayers[mapType].attribution}
+            url={tileLayers[mapType].url}
           />
           
           <MapClickHandler onMapClick={handleMapClick} />
@@ -690,7 +817,7 @@ const Map = () => {
           {route && (
             <Polyline
               positions={route.path}
-              color="#667eea"
+              color="#3498db"
               weight={6}
               opacity={0.8}
               dashArray="10, 5"

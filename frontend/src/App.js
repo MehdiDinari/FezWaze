@@ -8,13 +8,13 @@ function App() {
   return (
     <div className="App" style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      fontFamily: "'Poppins', 'Helvetica Neue', Arial, sans-serif",
+      background: 'linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%)',
+      fontFamily: "'Inter', 'Roboto', Arial, sans-serif",
       margin: 0,
       padding: 0
     }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
         
         * {
           box-sizing: border-box;
@@ -67,12 +67,12 @@ function App() {
         }
         
         ::-webkit-scrollbar-thumb {
-          background: linear-gradient(135deg, #667eea, #764ba2);
+          background: linear-gradient(135deg, #3498db, #2c3e50);
           border-radius: 4px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(135deg, #5a67d8, #6b46c1);
+          background: linear-gradient(135deg, #2980b9, #34495e);
         }
         
         /* Responsive */
