@@ -8,14 +8,15 @@ from .serializers import (
     SearchLocationSerializer
 )
 from .utils import GeocodingService, RoutingService, TrafficDataService
-from .models import MongoDBManager
+from .models import MongoDBManager, PreExtractedLocation
 from .ml_integration import MLIntegration
 from datetime import datetime
 import traceback
+from django.db.models import Q
 
 class SearchLocationView(APIView):
     """
-    API pour rechercher des lieux par nom
+    API pour rechercher des lieux par nom dans les données pré-extraites
     """
     def post(self, request):
         serializer = SearchLocationSerializer(data=request.data)
@@ -23,25 +24,21 @@ class SearchLocationView(APIView):
         if serializer.is_valid():
             query = serializer.validated_data['query']
             
-            # Recherche dans MongoDB d'abord
-            location = MongoDBManager.find_location_by_name(query)
-            
-            if location:
-                # Si trouvé dans MongoDB, retourner le résultat
-                return Response({
-                    'name': location['name'],
-                    'coordinates': location['coordinates']
-                })
-            
-            # Sinon, utiliser le service de géocodage
-            locations = GeocodingService.search_location(query)
+            # Recherche dans les lieux pré-extraits avec une recherche insensible à la casse
+            # et qui contient le terme de recherche
+            locations = PreExtractedLocation.objects.filter(
+                Q(name__icontains=query)
+            ).order_by('name')[:10]  # Limiter à 10 résultats
             
             if locations:
-                # Sauvegarder le premier résultat dans MongoDB pour une utilisation future
-                first_location = locations[0]
-                MongoDBManager.save_location(first_location['name'], first_location['coordinates'])
-                
-                return Response(locations)
+                # Formater les résultats
+                results = []
+                for location in locations:
+                    results.append({
+                        'name': location.name,
+                        'coordinates': location.coordinates
+                    })
+                return Response(results)
             
             return Response({'message': 'Aucun lieu trouvé'}, status=status.HTTP_404_NOT_FOUND)
         
