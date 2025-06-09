@@ -60,12 +60,12 @@ class GeocodingService:
 
 class RoutingService:
     """
-    Service de calcul d'itinéraire utilisant OSRM (Open Source Routing Machine)
+    Service de calcul d'itinéraire utilisant Valhalla (Open Source Routing Engine)
     """
     @staticmethod
     def get_route(start_point, end_point, max_retries=3, retry_delay=1):
         """
-        Calcule un itinéraire entre deux points en utilisant l'API OSRM
+        Calcule un itinéraire entre deux points en utilisant l'API Valhalla
         start_point et end_point sont des listes [longitude, latitude]
         """
         # Validation des coordonnées d'entrée
@@ -73,51 +73,60 @@ class RoutingService:
             print("Coordonnées invalides")
             return RoutingService.fallback_route(start_point, end_point)
         
-        # Utilisation de l'API OSRM pour obtenir un vrai trajet routier
-        osrm_url = "https://router.project-osrm.org/route/v1/driving"
+        # Utilisation de l'API Valhalla pour obtenir un vrai trajet routier
+        valhalla_url = "https://valhalla1.openstreetmap.de/route"
         
-        # Formatage des coordonnées pour l'API OSRM
-        coords = f"{start_point[0]},{start_point[1]};{end_point[0]},{end_point[1]}"
-        
-        # Options pour obtenir la géométrie détaillée et les étapes
-        params = {
-            "overview": "full",
-            "geometries": "geojson",
-            "steps": "true",
-            "annotations": "true"
+        # Préparation du payload JSON pour Valhalla
+        payload = {
+            "locations": [
+                {"lat": start_point[1], "lon": start_point[0]},
+                {"lat": end_point[1], "lon": end_point[0]}
+            ],
+            "costing": "auto",
+            "shape_match": "edge_walk",
+            "filters": {
+                "attributes": ["edge.length", "edge.time"],
+                "action": "include"
+            }
         }
         
-        print(f"OSRM Request URL: {osrm_url}/{coords}")
-        print(f"OSRM Request Params: {params}")
+        headers = {
+            "Content-Type": "application/json",
+            "User-Agent": "RouteFinder/1.0"
+        }
         
-        # Appel à l'API OSRM avec mécanisme de retry
+        print(f"Valhalla Request URL: {valhalla_url}")
+        print(f"Valhalla Request Payload: {json.dumps(payload, indent=2)}")
+        
+        # Appel à l'API Valhalla avec mécanisme de retry
         for attempt in range(max_retries):
             try:
-                response = requests.get(f"{osrm_url}/{coords}", params=params, timeout=15)
+                response = requests.post(valhalla_url, json=payload, headers=headers, timeout=120)
                 
-                print(f"OSRM Response Status: {response.status_code}")
+                print(f"Valhalla Response Status: {response.status_code}")
                 
                 if response.status_code == 200:
                     data = response.json()
                     
-                    print(f"OSRM Response Code: {data.get('code')}")
+                    print(f"Valhalla Response Keys: {list(data.keys())}")
                     
-                    if data.get("code") == "Ok" and data.get("routes") and len(data["routes"]) > 0:
-                        route = data["routes"][0]
+                    if "trip" in data and "legs" in data["trip"] and len(data["trip"]["legs"]) > 0:
+                        trip = data["trip"]
+                        leg = trip["legs"][0]  # Premier segment
                         
                         # Validation de la structure de la réponse
-                        if "geometry" not in route or "coordinates" not in route["geometry"]:
-                            print("Structure de réponse OSRM invalide")
+                        if "shape" not in leg:
+                            print("Structure de réponse Valhalla invalide - pas de géométrie")
                             break
                         
-                        # Extraction du chemin (coordonnées)
-                        path = route["geometry"]["coordinates"]
+                        # Extraction du chemin (coordonnées décodées du shape)
+                        path = RoutingService._decode_polyline(leg["shape"])
                         
                         # Extraction de la distance en mètres
-                        distance = route.get("distance", 0)
+                        distance = leg.get("summary", {}).get("length", 0) * 1000  # Conversion km -> m
                         
                         # Extraction de la durée en secondes
-                        duration = route.get("duration", 0)
+                        duration = leg.get("summary", {}).get("time", 0)
                         
                         # Obtenir l'heure actuelle pour le facteur de trafic
                         current_hour = datetime.now().hour
@@ -130,11 +139,11 @@ class RoutingService:
                         minutes = int(adjusted_duration // 60)
                         seconds = int(adjusted_duration % 60)
                         
-                        print(f"OSRM Path Points: {len(path)}")
-                        print(f"OSRM First Point: {path[0]}")
-                        print(f"OSRM Last Point: {path[-1]}")
-                        print(f"OSRM Distance: {distance}m")
-                        print(f"OSRM Duration: {duration}s")
+                        print(f"Valhalla Path Points: {len(path)}")
+                        print(f"Valhalla First Point: {path[0] if path else 'N/A'}")
+                        print(f"Valhalla Last Point: {path[-1] if path else 'N/A'}")
+                        print(f"Valhalla Distance: {distance}m")
+                        print(f"Valhalla Duration: {duration}s")
                         print(f"Traffic Factor: {traffic_factor}")
                         print(f"Adjusted Duration: {adjusted_duration}s")
                         
@@ -150,14 +159,16 @@ class RoutingService:
                             "success": True
                         }
                     else:
-                        error_msg = data.get('message', 'Aucune route trouvée')
-                        print(f"OSRM Error: {error_msg}")
+                        error_msg = data.get('error', 'Aucune route trouvée')
+                        print(f"Valhalla Error: {error_msg}")
                         
                 elif response.status_code == 400:
-                    print("Requête OSRM invalide - arrêt des tentatives")
+                    print("Requête Valhalla invalide - arrêt des tentatives")
+                    print(f"Response: {response.text}")
                     break
                 else:
-                    print(f"Erreur HTTP OSRM: {response.status_code}")
+                    print(f"Erreur HTTP Valhalla: {response.status_code}")
+                    print(f"Response: {response.text}")
                         
                 # Si nous sommes ici, c'est que la requête a échoué
                 if attempt < max_retries - 1:
@@ -166,18 +177,67 @@ class RoutingService:
                     retry_delay *= 2  # Backoff exponentiel
                     
             except requests.exceptions.RequestException as e:
-                print(f"Erreur de requête OSRM: {str(e)}")
+                print(f"Erreur de requête Valhalla: {str(e)}")
                 if attempt < max_retries - 1:
                     print(f"Tentative {attempt + 1}/{max_retries} après {retry_delay}s")
                     time.sleep(retry_delay)
                     retry_delay *= 2
             except (KeyError, ValueError, TypeError) as e:
-                print(f"Erreur de traitement des données OSRM: {str(e)}")
+                print(f"Erreur de traitement des données Valhalla: {str(e)}")
                 break
         
         # En cas d'échec après tous les essais, utiliser la méthode de secours
         print("Utilisation du calcul d'itinéraire de secours")
         return RoutingService.fallback_route(start_point, end_point)
+    
+    @staticmethod
+    def _decode_polyline(encoded_string, precision=6):
+        """
+        Décode une polyline encodée (format utilisé par Valhalla)
+        """
+        try:
+            coordinates = []
+            index = 0
+            lat = 0
+            lng = 0
+            factor = 10 ** precision
+
+            while index < len(encoded_string):
+                # Décodage latitude
+                shift = 0
+                result = 0
+                while True:
+                    byte = ord(encoded_string[index]) - 63
+                    index += 1
+                    result |= (byte & 0x1f) << shift
+                    shift += 5
+                    if byte < 0x20:
+                        break
+                
+                lat_change = ~(result >> 1) if (result & 1) else (result >> 1)
+                lat += lat_change
+
+                # Décodage longitude
+                shift = 0
+                result = 0
+                while True:
+                    byte = ord(encoded_string[index]) - 63
+                    index += 1
+                    result |= (byte & 0x1f) << shift
+                    shift += 5
+                    if byte < 0x20:
+                        break
+                
+                lng_change = ~(result >> 1) if (result & 1) else (result >> 1)
+                lng += lng_change
+
+                coordinates.append([lng / factor, lat / factor])
+
+            return coordinates
+            
+        except Exception as e:
+            print(f"Erreur de décodage polyline: {str(e)}")
+            return []
     
     @staticmethod
     def _validate_coordinates(point):
@@ -200,7 +260,7 @@ class RoutingService:
     @staticmethod
     def fallback_route(start_point, end_point):
         """
-        Méthode de secours pour calculer un itinéraire si l'API OSRM échoue
+        Méthode de secours pour calculer un itinéraire si l'API Valhalla échoue
         """
         try:
             # Simulation d'un itinéraire avec quelques points intermédiaires
@@ -496,6 +556,7 @@ def test_services():
         print(f"  Durée: {route['duration_text']}")
         print(f"  Points dans le chemin: {len(route['path'])}")
         print(f"  Succès API: {route.get('success', 'Non défini')}")
+        print(f"  Service utilisé: {'Valhalla' if route.get('success') else 'Calcul de secours'}")
     else:
         print("Erreur dans le calcul d'itinéraire")
 

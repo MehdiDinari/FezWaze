@@ -1,0 +1,38 @@
+{
+ "name": "fes_route_finder",
+ "version": "1.0.0",
+ "description": "Application de navigation intelligente pour la ville de Fès avec optimisation par Machine Learning",
+ "main": "index.js",
+ "scripts": {
+   "test": "echo \"Error: no test specified\" && exit 1",
+   "build": "npm install --prefix frontend && npm run build --prefix frontend",
+   "start": "cd backend && python manage.py runserver",
+   "dev": "concurrently \"cd backend && python manage.py runserver\" \"cd frontend && npm start\"",
+   "install-deps": "pip install -r backend/requirements.txt && npm install --prefix frontend",
+   "migrate": "cd backend && python manage.py migrate",
+   "collectstatic": "cd backend && python manage.py collectstatic --noinput"
+ },
+ "repository": {
+   "type": "git",
+   "url": "git+https://github.com/MehdiDinari/FezWaze.git"
+ },
+ "keywords": [
+   "navigation",
+   "fes",
+   "route-planning",
+   "machine-learning",
+   "django",
+   "react",
+   "mongodb"
+ ],
+ "author": "Mehdi Dinari",
+ "license": "ISC",
+ "type": "commonjs",
+ "bugs": {
+   "url": "https://github.com/MehdiDinari/FezWaze/issues"
+ },
+ "homepage": "https://github.com/MehdiDinari/FezWaze#readme",
+ "devDependencies": {
+   "concurrently": "^7.6.0"
+ }
+}
